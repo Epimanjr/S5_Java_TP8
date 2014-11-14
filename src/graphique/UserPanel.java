@@ -305,6 +305,8 @@ public class UserPanel extends javax.swing.JPanel {
             /* Récupération des variables */
             String ancienPass = aCacherPassancien.getText();
             String newPass = aCacherPassNew.getText();
+            
+            System.out.println("Ancien : " + ancienPass + " ; Nouveau : " + newPass);
 
             /* Appel de la méthode */
             if (user.setMdp(ancienPass, newPass)) {

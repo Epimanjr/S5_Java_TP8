@@ -108,10 +108,9 @@ public class Utilisateur {
     }
 
     public boolean setMdp(String ancienMdp, String nouveauMdp) {
-        if (motDePasse != ancienMdp) {
+        if (!motDePasse.equals(ancienMdp)) {
             return false;
         }
-        
         HashMap<String, String> tmp = new HashMap<>();
 
         //Lecture && stockage tempor
