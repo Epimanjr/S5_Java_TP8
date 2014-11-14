@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,11 @@ public class Utilisateur {
      */
     private String motDePasse;
 
+    /**
+     * Utilisateur(s) connecté(s).
+     */
+    public static HashMap<String,Utilisateur> connectes = new HashMap<>();
+    
     /**
      * Construit un utilisateur.
      * @param nom
@@ -87,6 +93,17 @@ public class Utilisateur {
         return false;
     }
     
+    public static Utilisateur getUtilisateur(String nom,String mdp) {
+        if ((connectes.containsKey(nom))) {
+            return (Utilisateur)(connectes.get(nom));
+        } else if (nomEtMdpCorrect(nom, mdp)){
+            Utilisateur u = new Utilisateur(nom, mdp);
+            connectes.put(nom, u);
+            return u;
+        } else {
+            return null;
+        }
+    }
     
     
 }
