@@ -31,6 +31,12 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
     
+    private static boolean nomEtMdpCorrect(String id, String mdp) {
+        boolean res = false;
+        
+        return res;
+    }
+    
     
     
 }
