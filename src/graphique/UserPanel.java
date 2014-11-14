@@ -40,9 +40,9 @@ public class UserPanel extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         aCacherLabel = new javax.swing.JLabel();
-        aCacherPass = new javax.swing.JPasswordField();
-        aCacherBouton = new javax.swing.JButton();
         aCacherPassancien = new javax.swing.JPasswordField();
+        aCacherBouton = new javax.swing.JButton();
+        aCacherPassNew = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -119,11 +119,11 @@ public class UserPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(aCacherPass, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(aCacherPassancien, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(aCacherPassancien, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(aCacherPassNew, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(aCacherBouton))
                                     .addGroup(layout.createSequentialGroup()
@@ -165,9 +165,9 @@ public class UserPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(aCacherPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(aCacherPassancien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(aCacherBouton)
-                    .addComponent(aCacherPassancien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(aCacherPassNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -177,8 +177,8 @@ public class UserPanel extends javax.swing.JPanel {
     public void visible(boolean v) {
         aCacherBouton.setVisible(v);
         aCacherLabel.setVisible(v);
-        aCacherPass.setVisible(v);
         aCacherPassancien.setVisible(v);
+        aCacherPassNew.setVisible(v);
         jLabel4.setVisible(v);
         jLabel5.setVisible(v);
 
@@ -225,7 +225,7 @@ public class UserPanel extends javax.swing.JPanel {
         } else {
             /* Récupération des variables */
             String ancienPass = aCacherPassancien.getText();
-            String newPass = aCacherPass.getText();
+            String newPass = aCacherPassNew.getText();
 
             /* Appel de la méthode */
             if (user.setMdp(ancienPass, newPass)) {
@@ -257,7 +257,7 @@ public class UserPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aCacherBouton;
     private javax.swing.JLabel aCacherLabel;
-    private javax.swing.JPasswordField aCacherPass;
+    private javax.swing.JPasswordField aCacherPassNew;
     private javax.swing.JPasswordField aCacherPassancien;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

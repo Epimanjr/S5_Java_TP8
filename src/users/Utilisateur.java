@@ -144,7 +144,10 @@ public class Utilisateur {
             Iterator it = cles.iterator();
             int iterateur = 0;
             while (it.hasNext()) {
-                pw.println(it.next().toString() + " " + (String)(tmp.get(it.next().toString())));
+                String cle = it.next().toString();
+                String valeur = tmp.get(cle);
+                System.out.println("Ecriture : " + cle + " " + valeur);
+                pw.println(cle + " " + valeur);
             }
             pw.close();
             return true;
