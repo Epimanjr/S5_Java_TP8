@@ -88,6 +88,12 @@ public class UserPanel extends javax.swing.JPanel {
             }
         });
 
+        aCacherPassNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aCacherPassNewActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("Ancien MDP");
 
         jLabel5.setText("Nouveau MDP");
@@ -220,20 +226,7 @@ public class UserPanel extends javax.swing.JPanel {
     private void aCacherBoutonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aCacherBoutonActionPerformed
         // TODO add your handling code here:
 
-        if (user == null) {
-            JOptionPane.showMessageDialog(null, "PROBLEME UTILISATEUR NULL.", "Information", JOptionPane.ERROR_MESSAGE);
-        } else {
-            /* Récupération des variables */
-            String ancienPass = aCacherPassancien.getText();
-            String newPass = aCacherPassNew.getText();
-
-            /* Appel de la méthode */
-            if (user.setMdp(ancienPass, newPass)) {
-                JOptionPane.showMessageDialog(null, "NOUVEAU MOT DE PASSE OK.", "Succès", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "ERREUR.", "Information", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        changementMotDePasse();
     }//GEN-LAST:event_aCacherBoutonActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -252,6 +245,12 @@ public class UserPanel extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void aCacherPassNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aCacherPassNewActionPerformed
+        // TODO add your handling code here:
+        
+        changementMotDePasse();
+    }//GEN-LAST:event_aCacherPassNewActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -296,6 +295,23 @@ public class UserPanel extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "PROBLEME CONNEXION.", "Information", JOptionPane.ERROR_MESSAGE);
 
+        }
+    }
+
+    private void changementMotDePasse() {
+        if (user == null) {
+            JOptionPane.showMessageDialog(null, "PROBLEME UTILISATEUR NULL.", "Information", JOptionPane.ERROR_MESSAGE);
+        } else {
+            /* Récupération des variables */
+            String ancienPass = aCacherPassancien.getText();
+            String newPass = aCacherPassNew.getText();
+
+            /* Appel de la méthode */
+            if (user.setMdp(ancienPass, newPass)) {
+                JOptionPane.showMessageDialog(null, "NOUVEAU MOT DE PASSE OK.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERREUR.", "Information", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
