@@ -43,6 +43,18 @@ public class UserPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Mot de passe : ");
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
+            }
+        });
+
         jButton1.setText("Connexion");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,23 +76,23 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPasswordField1))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(51, Short.MAX_VALUE))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPasswordField1))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,11 +105,11 @@ public class UserPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                     .addComponent(jPasswordField1))
-                .addGap(48, 48, 48)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -108,27 +120,34 @@ public class UserPanel extends javax.swing.JPanel {
 
         /* Inscription */
         if (Utilisateur.inscription(jTextField1.getText(), jPasswordField1.getText())) {
-            JOptionPane.showMessageDialog(null, "OK.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Inscription OK.", "Succès", JOptionPane.INFORMATION_MESSAGE);
 
         } else {
-            JOptionPane.showMessageDialog(null, "PROBLEME.", "Information", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "PROBLEME INSCRIPTION.", "Information", JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        /* Inscription */
-        if (Utilisateur.nomEtMdpCorrect(jTextField1.getText(), jPasswordField1.getText())) {
-            JOptionPane.showMessageDialog(null, "OK.", "Succès", JOptionPane.INFORMATION_MESSAGE);
 
-            jLabel3.setText("Connecté en tant que "+jTextField1.getText());
-        } else {
-            JOptionPane.showMessageDialog(null, "PROBLEME.", "Information", JOptionPane.ERROR_MESSAGE);
-
-        }
+        /* Lancer la connexion */
+        lancerActionConnexion();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        // TODO add your handling code here:
+
+        /* Lancer la connexion */
+        lancerActionConnexion();
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        
+        /* Lancer la connexion */
+        lancerActionConnexion();
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -150,4 +169,16 @@ public class UserPanel extends javax.swing.JPanel {
      JOptionPane.showMessageDialog(null, "La liaison existe déjà ou erreur.", "Information", JOptionPane.ERROR_MESSAGE);
      }
      */
+    private void lancerActionConnexion() {
+        /* Connexion */
+        Utilisateur user = Utilisateur.getUtilisateur(jTextField1.getText(), jPasswordField1.getText());
+        if (user != null) {
+            JOptionPane.showMessageDialog(null, "Connexion OK.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+
+            jLabel3.setText("Connecté en tant que " + jTextField1.getText());
+        } else {
+            JOptionPane.showMessageDialog(null, "PROBLEME CONNEXION.", "Information", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
 }
