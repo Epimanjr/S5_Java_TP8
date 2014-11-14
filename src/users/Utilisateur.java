@@ -153,5 +153,9 @@ public class Utilisateur {
         }
         return false;
     }
-
+    
+    public void deconnexion() {
+        connectes.remove(nom);
+    }
+    
 }
