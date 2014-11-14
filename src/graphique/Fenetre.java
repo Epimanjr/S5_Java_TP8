@@ -39,6 +39,7 @@ public class Fenetre extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TP8 du Super module de JAVA !");
+        setPreferredSize(new java.awt.Dimension(600, 450));
         setResizable(false);
 
         jMenu1.setText("Menu");
