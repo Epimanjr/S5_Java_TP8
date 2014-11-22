@@ -1,0 +1,210 @@
+import java.util.*;
+import java.io.*;
+
+
+public class Utilisateur {
+  
+  private static Map<String, Utilisateur> utilisateurs =     new HashMap<String, Utilisateur>();//mémoire stockant les utilisateurs déjà créés
+  private String nom;
+  private String mdp;
+  private static String EMPLACEMENT_MOT_DE_PASSE = "mdp.txt";//fichier de mots de passe
+
+
+  private Utilisateur(String nom, String mdp) {
+    this.nom = nom;
+    this.mdp = mdp;
+    utilisateurs.put(nom, this);//ajout de l'utilisateur en mémoire
+  }
+
+
+
+  //récupère un utilisateur en fonction d'un nom et d'un mot de passe
+  public static Utilisateur getUtilisateur(String nom, String mdp) throws AccesException {
+    Utilisateur utilisateur = utilisateurs.get(nom);
+    if (utilisateur != null) {//utilisateur déjà créé
+      if (utilisateur.mdp.equals(mdp)) {//mot de passe bon
+	return utilisateur;
+      }
+      else { // mauvais mot de passe
+	return null;
+      }
+    }
+    // sinon l'utilisateur est créé et on vérifie son mot de passe
+    if (nomEtMdpCorrect(nom, mdp)) {
+      return new Utilisateur(nom, mdp);
+    }
+    else {
+      return null;
+    }
+  }
+
+  
+  //vérifie la validité d'un mot de passe pour un utilisateur
+  private static boolean nomEtMdpCorrect(String nom, String mdp) 
+      throws AccesException {
+    BufferedReader br;
+    try {
+        br = new BufferedReader(new FileReader(EMPLACEMENT_MOT_DE_PASSE));
+    }
+    catch (FileNotFoundException ex) {
+      throw new AccesException("Impossible d'ouvrir le fichier des mots de passe", ex);
+    }
+    String ligne;//ligne lue dans le fichier de mots de passe
+    try {
+      while ( (ligne = br.readLine()) != null) {
+        // Est-ce que la ligne correspond au nom passé en paramètre ?
+        // Séparateur entre le nom et le mot de passe : 1 ou plusieurs espaces
+        String[] valeurs = ligne.split(" ");
+        if (valeurs[0].equals(nom)) {
+           if (valeurs.length == 1) {//pas de mot de passe
+              return "".equals(mdp);
+          }
+          else {// Il y a un mot de passe
+            return valeurs[1].equals(mdp);
+          }
+        }
+      }
+      // login pas trouvé
+      return false;
+    }
+    catch (IOException ex1) {
+      throw new AccesException("Problème pour lire le fichier des mots de passe", ex1);
+    }
+    finally {
+      try {
+        br.close();
+      }
+      catch(IOException ex2) {
+        throw new AccesException("Impossible de fermer le fichier des mots de passe", ex2);
+      }
+    }
+  }
+
+  
+  
+
+  //modifie le mot de passe en testant l'ancien
+  public boolean setMdp(String ancienMdp, String nouveauMdp) 
+    throws AccesException {
+    if (mdp.equals(ancienMdp)) {
+      modifMdpSurSupport(nouveauMdp); // Modification du fichier de mots de passe
+      this.mdp = nouveauMdp;//Modification du mot de passe
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+ 
+  //modifie mdp.txt
+  private void modifMdpSurSupport(String nouveauMdp) 
+      throws AccesException {
+    boolean mdpModifieDirectement=false;
+    // Stratégie utilisée pour modifier le mot de passe :
+    // Lit tout le fichier des mots de passe en mémoire,
+    // en modifiant au passage la ligne qui concerne l'utilisateur courant,
+    // puis écrit tout le fichier en une fois.
+    // Aucune stratégie n'est vraiment efficace en cas d'accès avec une 
+    // forte concurrence à ce fichier, et avec de nombreux utilisateurs. 
+    // Dans la "réalité" il faudrait utiliser une base de
+    // données pour ne bloquer que les données qui concernent l'utilisateur
+    // courant. Sans base de données, il faudrait au moins utiliser un
+    // accès direct aux données (RandomAccessFile) et pas un accès séquentiel.
+    StringBuilder contenu = new StringBuilder();
+    BufferedReader br = null;
+    try {
+      br = new BufferedReader(new FileReader(EMPLACEMENT_MOT_DE_PASSE));
+      String ligne;
+      while ( (ligne = br.readLine()) != null) {
+        String[] valeurs = ligne.split(" ");
+        if (valeurs[0].equals(this.nom)) { // Login trouvé.
+          // On vérifie en passant que le mot de passe n'a pas été changé
+          // sur le support.
+          // Pour le test, il faut distinguer 2 cas : 
+          // l'utilisateur a un mot de passe ou non sur le support.
+          if ((valeurs.length == 1 && mdp.equals(""))
+              || (mdp.equals(valeurs[1]))) {
+            // Le mot de passe n'a pas été modifié directement sur le support.
+            mdpModifieDirectement = false;
+            // Ajoute la ligne avec le nouveau mot de passe.
+            contenu.append(nom + " " + nouveauMdp+ System.getProperty("line.separator"));
+          }
+          else {
+            // Le mot de passe a été modifié directement sur le support
+            // depuis que cette instance (this) a été créée ;
+            mdpModifieDirectement = true;
+            // fin du parcours du fichier des mots de passe.
+            break;
+          }
+        } 
+        else {
+          // le login ne correspond pas et on ajoute la ligne sans la modifier
+          contenu.append(ligne + System.getProperty("line.separator"));
+        }
+      } 
+      if (mdpModifieDirectement) {
+        throw new AccesException("Mot de passe modifié directement sur le support pour " + this.nom);
+      }
+    }
+    catch(IOException e) {
+      throw new AccesException("Problème pour lire le fichier des mots de passe", e);
+    }
+    finally {
+      if (br != null) {
+        try {
+          br.close();
+        }
+        catch(IOException e) {
+          throw new AccesException("Impossible de fermer le fichier des mots de passe", e);
+        }
+      }
+    }
+    // Enregistre le nouveau fichier des mots de passe
+    PrintWriter pw = null;
+    try {
+      pw = new PrintWriter(EMPLACEMENT_MOT_DE_PASSE);
+      pw.print(contenu.toString());
+    }
+    catch(IOException e) {
+      throw new AccesException("Problème pour écrire le fichier des mots de passe", e);
+    }
+    finally {
+      if (pw != null) {
+        pw.close();
+      }
+    }
+  }
+    
+}
+
+
+public class AccesException extends Exception{
+String com;
+	public AccesException(String com, Exception e){
+	super(e);
+	this.com=com;
+	}
+
+	public AccesException(String com){
+	this.com=com;
+	}
+
+	
+}
+
+
+
+public class Test{
+
+	public static void main(String[] args){
+		try{
+			Utilisateur u=	Utilisateur.getUtilisateur("bibi","truc");
+			Utilisateur v=	Utilisateur.getUtilisateur("riri","machin");
+			System.out.println(u.setMdp("truc","muche"));//true
+			System.out.println(u.setMdp("machine","chose"));//false
+		}catch(AccesException e){System.out.println("Probleme d'acces");}	
+	}
+
+
+}
